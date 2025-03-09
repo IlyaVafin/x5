@@ -1,0 +1,22 @@
+# node_modules
+/node_modules/
+
+# dist (папка с результатами сборки)
+/dist/
+
+# .env (файл с переменными окружения)
+.env
+
+# IDE и редакторы
+.vscode/
+.idea/
+*.iml
+
+# Логи
+*.log
+
+# Системные файлы (например, для macOS)
+.DS_Store
+
+# npm
+package-lock.json
