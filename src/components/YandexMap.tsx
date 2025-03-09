@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Button from './Button'
 
 type YandexMapProps = {
@@ -18,6 +18,7 @@ const YandexMap: React.FC<YandexMapProps> = ({
 	setStart,
 	setEnd,
 }) => {
+	const [routeType, setRouteType] = useState<'auto' | 'pedestrian' | 'bicycle'>('auto')
 	const mapRef = useRef<HTMLDivElement>(null)
 	const mapInstance = useRef<any>(null)
 
@@ -62,7 +63,7 @@ const YandexMap: React.FC<YandexMapProps> = ({
 					const route = new window.ymaps.multiRouter.MultiRoute(
 						{
 							referencePoints: [startCoordinates, endCoordinates],
-							params: { routingMode: 'auto' },
+							params: { routingMode: routeType },
 						},
 						{ boundsAutoApply: true }
 					)
@@ -91,17 +92,52 @@ const YandexMap: React.FC<YandexMapProps> = ({
 		<div className='route'>
 			<h2>Построение маршрута</h2>
 			<input
+			className='input'
 				type='text'
 				placeholder='Начальный адрес'
 				value={start}
 				onChange={e => setStart(e.target.value)}
 			/>
 			<input
+			className='input'
 				type='text'
 				placeholder='Конечный адрес'
 				value={end}
 				onChange={e => setEnd(e.target.value)}
 			/>
+			<div>
+				<h4 className='type-route' style={{textAlign: 'center', marginBottom: '10px'}}>Выберите тип маршрута</h4>
+				<label>
+					<input 
+						type='radio' 
+						name='routeType' 
+						value='auto' 
+						checked={routeType === 'auto'}
+						onChange={() => setRouteType('auto')} 
+					/>
+					На автомобиле
+				</label>
+				<label>
+					<input 
+						type='radio' 
+						name='routeType' 
+						value='pedestrian' 
+						checked={routeType === 'pedestrian'}
+						onChange={() => setRouteType('pedestrian')} 
+					/>
+					Пешком
+				</label>
+				<label>
+					<input 
+						type='radio' 
+						name='routeType' 
+						value='bicycle' 
+						checked={routeType === 'bicycle'}
+						onChange={() => setRouteType('bicycle')} 
+					/>
+					Велосипед
+				</label>
+			</div>
 			<Button width='200px' height='50px' onClick={buildRoute}>
 				Построить маршрут
 			</Button>

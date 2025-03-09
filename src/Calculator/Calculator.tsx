@@ -30,21 +30,26 @@ const Calculator: React.FC<CalculatorProps> = ({
 			return // Если вес некорректен, выходим
 		}
 
-	
 		if (start.trim() === '' || end.trim() === '') {
 			setError('Введите адреса')
 			return
 		}
 
-		if(distance == '0' || distance == null) {
-			setError("Постройте маршрут!")
+		if (distance == '0' || distance == null) {
+			setError('Постройте маршрут!')
 			return
 		}
 
+		if (weight.includes(',')) {
+			setError('Введите десятичное число через точку')
+			return
+		}
 
 		setError('')
 		if (distance !== null) {
-			const newResult = 157 + weightNumber * 2 + Number(distance) * 5
+			const newResult = Math.round(
+				157 + weightNumber * 2 + Number(distance) * 5
+			)
 			setResult(newResult)
 		}
 	}
@@ -54,9 +59,10 @@ const Calculator: React.FC<CalculatorProps> = ({
 			<h2 className='calc-title'>Расчет</h2>
 			<form onSubmit={calcFunc}>
 				<label className='weight' htmlFor='weight'>
-					<p style={{marginBottom: '10px'}}>Килограммы</p>
+					<p style={{ marginBottom: '10px' }}>Килограммы</p>
 					<input
-						onChange={e => setWeight(e.target.value.replace(/\D/g, ''))}
+					className='input'
+						onChange={e => setWeight(e.target.value)}
 						value={weight}
 						name='weight'
 						id='weight'
@@ -66,7 +72,7 @@ const Calculator: React.FC<CalculatorProps> = ({
 					/>
 					<span className='error'>{error}</span>
 				</label>
-				<p className='result'>Стоимость заказа: {result}</p>
+				<p className='result'>Стоимость заказа: {result} руб.</p>
 				<Button width='300px' height='50px'>
 					Рассчитать
 				</Button>

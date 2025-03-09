@@ -24,7 +24,12 @@ li {
 	list-style-type: none;
 }
 
-input {
+input[type = "radio"] {
+	width: 30px;
+	height: 15px;
+}
+
+.input {
 	width: 16rem;
 	height: 3.125rem;
 	top: 0.0081rem;
@@ -90,6 +95,10 @@ input {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+
+.type-route {
+	font-size: 1.5em;
 }
 
 .length-route {
